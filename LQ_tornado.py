@@ -8,7 +8,7 @@ import tornado.ioloop
 import tornado.options
 import tornado.web
 from tornado.options import define, options
-import os
+import os.path
 
 define("port", default=8000, help="run on the given port", type=int)
 
@@ -22,18 +22,21 @@ class IndexHandler(tornado.web.RequestHandler):
 
 class DashboardHandler(tornado.web.RequestHandler):
     def get(self):
-        hosts_info = []
+        hosts_info = [['B1', '10.0.25.1', 2, 3],
+                      ['B2', '10.0.25.2', 2, 3],
+                      ['B3', '10.0.25.3', 2, 3],
+                      ]
         self.render('dashboard.html', hosts_info=hosts_info)
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     tornado.options.parse_command_line()
     app = tornado.web.Application(
         handlers=[
-            (r"/", IndexHandler),
-            (r"/dashboard", DashboardHandler)
+            (r'/', IndexHandler),
+            (r'/dashboard', DashboardHandler)
         ],
-        template_path=os.path.join(os.path.dirname(__file__), 'template'),
+        template_path=os.path.join(os.path.dirname(__file__), 'templates'),
         static_path=os.path.join(os.path.dirname(__file__), 'static'),
         debug=True
     )

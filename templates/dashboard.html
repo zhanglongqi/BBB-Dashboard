@@ -1,27 +1,29 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<link rel="stylesheet" href="{{ static_url("style.css") }}">
-	<title>BeagleBone Black Dashboard</title>
+    <link rel="stylesheet" href="{{ static_url("style.css") }}">
+    <title>BeagleBone Black Dashboard</title>
 </head>
 <body>
 <h1>BeagleBone Black Dashboard</h1>
 
 <table style="width:100%">
-  <tr>
-    <th>Host Name</th>
-    <th>IP</th> 
-    <th>Status</th>
-    <th>
-    	Last updating Time
-    </th>
-  </tr>
-  <tr>
-    <td>Eve</td>
-    <td>Jackson</td> 
-    <td>94</td>
-    <td>94</td>
-  </tr>
+    <tr>
+        <th>Host Name</th>
+        <th>IP</th>
+        <th>Status</th>
+        <th>
+            Last updating Time
+        </th>
+    </tr>
+    {% for host in hosts_info %}
+    <tr>
+        <td>{{ host[0] }}</td>
+        <td>{{ host[1] }}</td>
+        <td>{{ host[2] }}</td>
+        <td>{{ host[3] }}</td>
+    </tr>
+    {% end %}
 </table>
 </body>
 </html>
