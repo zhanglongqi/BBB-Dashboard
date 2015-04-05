@@ -8,32 +8,34 @@ import tornado.ioloop
 import tornado.options
 import tornado.web
 from tornado.options import define, options
+import os
 
 define("port", default=8000, help="run on the given port", type=int)
 
 
 class IndexHandler(tornado.web.RequestHandler):
     def get(self):
-        greeting = self.get_argument('name', default='Hello ')
-        self.write(greeting + ', friendly user!')
+        # greeting = self.get_argument('name', default='Hello ')
+        # self.write(greeting + ', friendly user!')
+        self.redirect('/dashboard')
 
 
-class WrapHandler(tornado.web.RequestHandler):
-    def post(self):
-        greeting = self.get_argument('name', default='Hello ')
-        text = self.get_argument('text', default='...')
+class DashboardHandler(tornado.web.RequestHandler):
+    def get(self):
+        hosts_info = []
+        self.render('dashboard.html', hosts_info=hosts_info)
 
-        import textwrap
-        self.write(greeting + ', friendly user!'+textwrap.fill(text=text, width=20))
 
 if __name__ == "__main__":
     tornado.options.parse_command_line()
-
     app = tornado.web.Application(
         handlers=[
             (r"/", IndexHandler),
-            (r"/wrap", WrapHandler)
-        ]
+            (r"/dashboard", DashboardHandler)
+        ],
+        template_path=os.path.join(os.path.dirname(__file__), 'template'),
+        static_path=os.path.join(os.path.dirname(__file__), 'static'),
+        debug=True
     )
 
     http_server = tornado.httpserver.HTTPServer(app)
