@@ -16,12 +16,12 @@
             Last updating Time
         </th>
     </tr>
-    {% for host in hosts_info %}
+    {% for host in iter(hosts_info) %}
     <tr>
-        <td>{{ host[0] }}</td>
-        <td>{{ host[1] }}</td>
-        <td>{{ host[2] }}</td>
-        <td>{{ host[3] }}</td>
+        <td>{{ hosts_info.get(host)[0] }}</td>
+        <td>{{ hosts_info.get(host)[1] }}</td>
+        <td>{{ hosts_info.get(host)[2] }}</td>
+        <td>{{ hosts_info.get(host)[3] }}</td>
     </tr>
     {% end %}
 </table>
