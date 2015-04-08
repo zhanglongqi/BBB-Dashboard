@@ -29,6 +29,6 @@ def info_loop():
                 hosts_info[host_row.hostname][2] = host_row.date.now()
             else:
                 pass
-                # todo 
+                # todo
                 # hosts_info.update({host_row.hostname, ['1', '1', 3, ]})
 
