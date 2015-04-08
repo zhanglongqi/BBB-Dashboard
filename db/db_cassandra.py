@@ -85,6 +85,21 @@ def update_host_info(hostname, time_rec, ip):
 
         print('insertion failed... ', res)
 
-#init_db()
-#B1 - 1416412784.71 - 10.42.0.12 ; 192.168.7.2 ;
-#update_host_info('B1',1416412784.71,'10.42.0.12 ; 192.168.7.2')
+
+def get_hosts_list(quantity):
+    get_hosts_list_query = session.prepare("""
+            SELECT * FROM mybbbs.bbb LIMIT ?
+            """)
+    try:
+        rows = session.execute(get_hosts_list_query, (quantity,))
+        if rows:
+            return rows
+        else:
+            pass
+    except:
+        print("lost connection to Casandra server!!!")
+
+
+        # init_db()
+        # B1 - 1416412784.71 - 10.42.0.12 ; 192.168.7.2 ;
+        #update_host_info('B1',1416412784.71,'10.42.0.12 ; 192.168.7.2')

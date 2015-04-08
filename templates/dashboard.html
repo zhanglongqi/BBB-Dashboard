@@ -11,10 +11,11 @@
     <tr>
         <th>Host Name</th>
         <th>IP</th>
-        <th>Status</th>
         <th>
             Last updating Time
         </th>
+        <th>Status</th>
+
     </tr>
     {% for host in iter(hosts_info) %}
     <tr>
@@ -22,6 +23,7 @@
         <td>{{ hosts_info.get(host)[1] }}</td>
         <td>{{ hosts_info.get(host)[2] }}</td>
         <td>{{ hosts_info.get(host)[3] }}</td>
+
     </tr>
     {% end %}
 </table>
