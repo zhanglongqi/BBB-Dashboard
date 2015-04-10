@@ -28,7 +28,10 @@ def info_loop():
                 hosts_info[host_row.hostname][1] = host_row.ip_info
                 hosts_info[host_row.hostname][2] = host_row.date.now()
             else:
-                pass
-                # todo
-                # hosts_info.update({host_row.hostname, ['1', '1', 3, ]})
+                hosts_info[host_row.hostname] = []
+                hosts_info[host_row.hostname].append(host_row.hostname)
+                hosts_info[host_row.hostname].append(host_row.ip_info)
+                hosts_info[host_row.hostname].append(host_row.date.now())
+                hosts_info[host_row.hostname].append(0)
+
 
