@@ -3,16 +3,20 @@ __author__ = 'longqi'
 '''
 sudo iptables -A PREROUTING -t nat -i eth0 -p tcp --dport 80 -j REDIRECT --to-port 8000
 '''
+import os
+import threading
+
 import tornado.httpserver
 import tornado.ioloop
 import tornado.options
 import tornado.web
 from tornado.options import define, options
-import os
-import threading
 
 from main.main_function import info_loop
 from configuration import hosts_info
+
+import json
+
 
 define("port", default=8000, help="run on the given port", type=int)
 
@@ -30,8 +34,15 @@ class DashboardHandler(tornado.web.RequestHandler):
         self.render('dashboard.html', hosts_info=hosts_info)
 
 
-if __name__ == '__main__':
+class TestHandler(tornado.web.RequestHandler):
+    def get(self):
+        print('Test handler:', hosts_info)
+        # new dictionary
+        response_to_send = {'newkey': 12}
 
+        self.write(json.dumps(response_to_send))
+
+if __name__ == '__main__':
     info_thread = threading.Thread(target=info_loop, args=())
     info_thread.start()
 
@@ -39,7 +50,8 @@ if __name__ == '__main__':
     app = tornado.web.Application(
         handlers=[
             (r'/', IndexHandler),
-            (r'/dashboard', DashboardHandler)
+            (r'/dashboard', DashboardHandler),
+            (r'/test/', TestHandler)
         ],
         template_path=os.path.join(os.path.dirname(__file__), 'templates'),
         static_path=os.path.join(os.path.dirname(__file__), 'static'),

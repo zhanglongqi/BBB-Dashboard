@@ -1,8 +1,55 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="{{ static_url("style.css") }}">
+    <!--   <link rel="stylesheet" href="{{ static_url("style.css") }}">-->
     <title>BeagleBone Black Dashboard</title>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+
+
+    <script>
+
+        $(document).ready(function () {
+            // initialize the viewer
+            $('#runajax').click(function (event) {
+
+                var valueForInput1 = $("#input1").val();
+                var valueForInput2 = $("#input2").val();
+
+                var data =
+                {
+                    key1: valueForInput1,
+                    key2: valueForInput2,
+
+                };
+
+                var dataToSend = JSON.stringify(data);
+
+                $.ajax(
+                        {
+                            url: '/test/',
+                            type: 'GET',
+                            data: dataToSend,
+
+                            success: function (jsonResponse) {
+                                var objresponse = JSON.parse(jsonResponse);
+                                console.log(objresponse['newkey']);
+
+                                $("#responsefield").text(objresponse['newkey']);
+
+                            },
+                            error: function () {
+                                $("#responsefield").text("Error to load api");
+
+                            }
+                        });
+
+                event.preventDefault();
+            });
+        });
+
+
+    </script>
+
 </head>
 <body>
 <h1>BeagleBone Black Dashboard</h1>
@@ -27,5 +74,15 @@
     </tr>
     {% end %}
 </table>
+
+<form class="well form-inline">
+
+    <input id="input1" type="text" class="input" placeholder="This text will get returned">
+    <input id="input2" type="text" class="input" placeholder="This text won't">
+
+    <button id="runajax" class="btn btn-primary">Run</button>
+</form>
+
+<span id="responsefield"></span>
 </body>
 </html>
