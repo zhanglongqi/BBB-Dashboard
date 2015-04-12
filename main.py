@@ -5,6 +5,9 @@ sudo iptables -A PREROUTING -t nat -i eth0 -p tcp --dport 80 -j REDIRECT --to-po
 '''
 import os
 import threading
+import json
+from pprint import pprint
+import sys
 
 import tornado.httpserver
 import tornado.ioloop
@@ -14,8 +17,6 @@ from tornado.options import define, options
 
 from main.main_function import info_loop
 from configuration import hosts_info
-
-import json
 
 
 define("port", default=8000, help="run on the given port", type=int)
@@ -30,17 +31,22 @@ class IndexHandler(tornado.web.RequestHandler):
 
 class DashboardHandler(tornado.web.RequestHandler):
     def get(self):
-        print(hosts_info)
+        pprint(hosts_info, stream=sys.stdout)
         self.render('dashboard.html', hosts_info=hosts_info)
+
+
+t1 = 1
 
 
 class TestHandler(tornado.web.RequestHandler):
     def get(self):
-        print('Test handler:', hosts_info)
+        global t1
+        print('Test handler:', t1)
         # new dictionary
-        response_to_send = {'newkey': 12}
-
+        t1 += 1
+        response_to_send = {'newkey': t1}
         self.write(json.dumps(response_to_send))
+
 
 if __name__ == '__main__':
     info_thread = threading.Thread(target=info_loop, args=())
