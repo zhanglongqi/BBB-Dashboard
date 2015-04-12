@@ -7,7 +7,7 @@ import os
 import threading
 import json
 from pprint import pprint
-import sys
+from time import time
 
 import tornado.httpserver
 import tornado.ioloop
@@ -31,7 +31,7 @@ class IndexHandler(tornado.web.RequestHandler):
 
 class DashboardHandler(tornado.web.RequestHandler):
     def get(self):
-        pprint(hosts_info, stream=sys.stdout)
+        pprint(hosts_info)
         self.render('dashboard.html', hosts_info=hosts_info)
 
 
@@ -57,7 +57,8 @@ if __name__ == '__main__':
         handlers=[
             (r'/', IndexHandler),
             (r'/dashboard', DashboardHandler),
-            (r'/test/', TestHandler)
+            (r'/test/', TestHandler),
+            (r'/updateData/', UpdateDataHandler)
         ],
         template_path=os.path.join(os.path.dirname(__file__), 'templates'),
         static_path=os.path.join(os.path.dirname(__file__), 'static'),
