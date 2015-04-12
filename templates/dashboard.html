@@ -45,6 +45,19 @@
 
                 event.preventDefault();
             });
+
+            $('#updateDataBut').click(function (event) {
+                // Get JSON-formatted data from the server
+
+                $.getJSON("/updateData/", function (data) {
+
+                    // Log each key in the response data
+                    $.each(data, function (key, value) {
+                        console.log(key + " : " + value);
+                    });
+                });
+                event.preventDefault();
+            });
         });
 
 
@@ -53,6 +66,8 @@
 </head>
 <body>
 <h1>BeagleBone Black Dashboard</h1>
+
+<button id="updateDataBut" class="btn btn-primary">Run</button>
 
 <table style="width:100%">
     <tr>
@@ -73,20 +88,20 @@
 
     </tr>
     {% end %}
-<!--    <tr>
+    <!--    <tr>
 
 
-<form class="well form-inline">
+    <form class="well form-inline">
 
-    <input id="input1" type="text" class="input" placeholder="This text will get returned">
-    <input id="input2" type="text" class="input" placeholder="This text won't">
+        <input id="input1" type="text" class="input" placeholder="This text will get returned">
+        <input id="input2" type="text" class="input" placeholder="This text won't">
 
-    <button id="runajax" class="btn btn-primary">Run</button>
-</form>
+        <button id="runajax" class="btn btn-primary">Run</button>
+    </form>
 
-<span id="responsefield"></span>
-    </tr>
-    -->
+    <span id="responsefield"></span>
+        </tr>
+        -->
 </table>
 
 </body>

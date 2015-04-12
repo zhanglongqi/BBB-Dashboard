@@ -32,6 +32,6 @@ def info_loop():
                 hosts_info[host_row.hostname].append(host_row.hostname)
                 hosts_info[host_row.hostname].append(host_row.ip_info)
                 hosts_info[host_row.hostname].append(host_row.date.now())
-                hosts_info[host_row.hostname].append(0)
+                hosts_info[host_row.hostname].append(-1)
 
 

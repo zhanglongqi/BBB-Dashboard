@@ -7,7 +7,8 @@ import os
 import threading
 import json
 from pprint import pprint
-from time import time
+import time
+import copy
 
 import tornado.httpserver
 import tornado.ioloop
@@ -33,6 +34,32 @@ class DashboardHandler(tornado.web.RequestHandler):
     def get(self):
         pprint(hosts_info)
         self.render('dashboard.html', hosts_info=hosts_info)
+
+
+class UpdateDataHandler(tornado.web.RequestHandler):
+    def get(self, *args, **kwargs):
+        interval = self.get_argument('interval', default=5)
+
+        # new dictionary
+        response_to_send = copy.deepcopy(hosts_info)
+        # ************
+        for host in hosts_info:
+            # print(host, type(hosts_info[host][2]), hosts_info[host][2])
+            if time.time() - hosts_info[host][2].timestamp() < 5:
+                # if the difference between record time and time now is less than 5, then it's in normal condition
+                hosts_info[host][3] = 0
+            else:
+                hosts_info[host][3] = -1
+            # format the datetime to string for JSON sending
+            response_to_send[host][2] = response_to_send[host][2].strftime('%Y-%m-%d %a %H:%M:%S')
+            # print(response_to_send[host][2])
+
+        # ************
+        print('Response to return')
+
+        pprint(response_to_send)
+
+        self.write(json.dumps(response_to_send))
 
 
 t1 = 1
