@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <!--   <link rel="stylesheet" href="{{ static_url("style.css") }}">-->
+    <link rel="stylesheet" href={{ static_url("style.css")}}>
     <title>BeagleBone Black Dashboard</title>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 
 
     <script>
 
-        $(document).ready(function () {
+        $(window).ready(function () {
             // initialize the viewer
             $('#runajax').click(function (event) {
 
@@ -73,9 +73,8 @@
 
     </tr>
     {% end %}
-</table>
+<!--    <tr>
 
-<br>
 
 <form class="well form-inline">
 
@@ -86,5 +85,9 @@
 </form>
 
 <span id="responsefield"></span>
+    </tr>
+    -->
+</table>
+
 </body>
 </html>

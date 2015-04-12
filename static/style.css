@@ -1,6 +1,6 @@
 body {
 	font-family: Helvetica,Arial,sans-serif;
-	width: 600px;
+	width: 800px;
 	margin: 0 auto;
     background-image: linear-gradient(#aaa 50%, #000);
 }
@@ -49,4 +49,3 @@ tr:hover:not(#firstrow) {
     transform: scale(1.0);
     box-shadow: 0px 3px 7px rgba(0, 0, 0, 0.5);
 }
-
