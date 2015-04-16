@@ -54,6 +54,22 @@
                     // Log each key in the response data
                     $.each(data, function (key, value) {
                         console.log(key + " : " + value);
+                        if ($('#'+key).length) {
+                            $('#'+key).html(
+                                            '<td>' + value[0] + '</td>' +
+                                            '<td>' + value[1] + '</td>' +
+                                            '<td>' + value[2] + '</td>' +
+                                            '<td>' + value[3] + '</td>');
+                        }
+                        else {
+                            $('#hostsinfo_table tr:last').after(
+                                            '<tr id=' + key + '>' +
+                                            '<td>' + value[0] + '</td>' +
+                                            '<td>' + value[1] + '</td>' +
+                                            '<td>' + value[2] + '</td>' +
+                                            '<td>' + value[3] + '</td>' +
+                                            '</tr>');
+                        }
                     });
                 });
                 event.preventDefault();
@@ -69,8 +85,8 @@
 
 <button id="updateDataBut" class="btn btn-primary">Run</button>
 
-<table style="width:100%">
-    <tr>
+<table style="width:100%" id="hostsinfo_table">
+    <tr id="head">
         <th>Host Name</th>
         <th>IP</th>
         <th>
@@ -79,15 +95,16 @@
         <th>Status</th>
 
     </tr>
-    {% for host in iter(hosts_info) %}
-    <tr>
-        <td>{{ hosts_info.get(host)[0] }}</td>
-        <td>{{ hosts_info.get(host)[1] }}</td>
-        <td>{{ hosts_info.get(host)[2] }}</td>
-        <td>{{ hosts_info.get(host)[3] }}</td>
+    <!--    {% for host in iter(hosts_info) %}
+        <tr>
+            <td>{{ hosts_info.get(host)[0] }}</td>
+            <td>{{ hosts_info.get(host)[1] }}</td>
+            <td>{{ hosts_info.get(host)[2] }}</td>
+            <td>{{ hosts_info.get(host)[3] }}</td>
 
-    </tr>
-    {% end %}
+        </tr>
+        {% end %}
+        -->
     <!--    <tr>
 
 
