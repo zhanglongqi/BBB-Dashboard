@@ -32,7 +32,7 @@ class IndexHandler(tornado.web.RequestHandler):
 
 class DashboardHandler(tornado.web.RequestHandler):
     def get(self):
-        pprint(hosts_info)
+        # pprint(hosts_info)
         self.render('dashboard.html', hosts_info=hosts_info)
 
 
@@ -45,7 +45,7 @@ class UpdateDataHandler(tornado.web.RequestHandler):
         # ************
         for host in hosts_info:
             # print(host, type(hosts_info[host][2]), hosts_info[host][2])
-            if time.time() - hosts_info[host][2].timestamp() < 5:
+            if time.time() - hosts_info[host][2].timestamp() < 10:
                 # if the difference between record time and time now is less than 5, then it's in normal condition
                 hosts_info[host][3] = 0
             else:
@@ -55,9 +55,9 @@ class UpdateDataHandler(tornado.web.RequestHandler):
             # print(response_to_send[host][2])
 
         # ************
-        print('Response to return')
+        # print('Response to return')
 
-        pprint(response_to_send)
+        # pprint(response_to_send)
 
         self.write(json.dumps(response_to_send))
 
