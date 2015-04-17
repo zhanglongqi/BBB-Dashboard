@@ -18,6 +18,7 @@ from tornado.options import define, options
 
 from main.main_function import info_loop
 from configuration import hosts_info
+from configuration import threshold
 
 
 define("port", default=8000, help="run on the given port", type=int)
@@ -45,7 +46,7 @@ class UpdateDataHandler(tornado.web.RequestHandler):
         # ************
         for host in hosts_info:
             # print(host, type(hosts_info[host][2]), hosts_info[host][2])
-            if time.time() - hosts_info[host][2].timestamp() < 10:
+            if time.time() - hosts_info[host][2].timestamp() < threshold:
                 # if the difference between record time and time now is less than 5, then it's in normal condition
                 hosts_info[host][3] = 0
             else:
